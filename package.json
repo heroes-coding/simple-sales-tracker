@@ -1,0 +1,90 @@
+{
+  "name": "qstart",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.0.0",
+    "d3": "^5.0.0",
+    "electron": "^1.8.4",
+    "electron-builder": "^20.8.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "node-sass-chokidar": "^1.2.2",
+    "npm-run-all": "^4.1.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1",
+    "redux": "^3.7.2",
+    "redux-promise": "^0.5.3"
+  },
+  "scripts": {
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "yarn run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all build-css build-js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "dist": "yarn build && build",
+    "react-start": "react-scripts start",
+    "pack": "electron-builder --dir",
+    "electron": "electron .",
+    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000&& electron .",
+    "electron-mac-dev": "ELECTRON_START_URL=http://localhost:3000 electron ."
+  },
+  "devDependencies": {
+    "electron-is-dev": "^0.3.0",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "node-sass": "^4.8.3",
+    "react-redux": "^5.0.7"
+  },
+  "main": "src/electron.js",
+  "homepage": "./",
+  "build": {
+    "appId": "some.app",
+    "buildVersion": "1",
+    "mac": {
+      "publish": [
+        "github"
+      ],
+      "target": "dmg"
+    },
+    "win": {
+      "publish": [
+        "github"
+      ],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "files": [
+      "build/",
+      "node_modules/",
+      {
+        "from": "src",
+        "to": "build",
+        "filter": [
+          "electron.js",
+          "electron/**/*"
+        ]
+      },
+      {
+        "from": "public",
+        "to": "."
+      }
+    ]
+  }
+}
